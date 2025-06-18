@@ -1,16 +1,16 @@
 # JetVein ✈️
 
-A modern aircraft tracking application built with Next.js 15, TypeScript, and Redis.
+A modern aircraft tracking application built with Next.js 15, TypeScript, and MongoDB.
 
 ## 🚀 Features
 
 - [x] Modern UI with dark/light/system theme toggle
 - [x] Responsive design with mobile-friendly navbar
 - [x] Cool text animations (typewriter, glitch, wave, etc.)
-- [x] Redis integration for caching and data storage
+- [x] Authentication with NextAuth.js
+- [x] User registration and signin
 - [ ] Real-time aircraft tracking
 - [ ] Flight search functionality
-- [ ] User authentication
 - [ ] Flight history tracking
 - [ ] Push notifications for flight updates
 
@@ -18,7 +18,8 @@ A modern aircraft tracking application built with Next.js 15, TypeScript, and Re
 
 - **Frontend**: Next.js 15, React 19, TypeScript
 - **Styling**: Tailwind CSS v4
-- **Database**: Redis (caching & data storage)
+- **Database**: MongoDB (user data & authentication)
+- **Authentication**: NextAuth.js with MongoDB adapter
 - **Animations**: Framer Motion
 - **UI Components**: Radix UI, Lucide Icons
 - **Theme**: next-themes
@@ -37,14 +38,15 @@ A modern aircraft tracking application built with Next.js 15, TypeScript, and Re
 - [ ] Implement error boundaries
 
 ### 🔧 Backend/API
-- [x] ~~Set up Redis configuration~~
-- [x] ~~Create Redis service utilities~~
-- [x] ~~Implement caching functions~~
+- [x] ~~Set up MongoDB configuration~~
+- [x] ~~Create authentication system~~
 - [x] ~~Add health check API~~
+- [x] ~~Implement user registration API~~
+- [x] ~~Add middleware for security and rate limiting~~
 - [ ] Integrate aircraft tracking API
 - [ ] Create flight search endpoints
-- [ ] Add rate limiting
 - [ ] Implement API key management
+- [ ] Add user search history
 
 ### 🔐 Authentication
 - [x] ~~Set up authentication system and providers~~
@@ -71,7 +73,19 @@ A modern aircraft tracking application built with Next.js 15, TypeScript, and Re
 3. **Set up environment variables**
    ```bash
    cp .env.example .env.local
+   # Edit .env.local with your MongoDB URI and authentication configs
+   ```
 
+4. **Set up MongoDB database**
+   ```bash
+   # Using MongoDB Atlas (recommended)
+   # Create a free cluster at https://cloud.mongodb.com
+   
+   # Or using Docker locally
+   docker run -p 27017:27017 mongo:latest
+   
+   # Or install MongoDB locally
+   # Follow instructions at https://docs.mongodb.com/manual/installation/
    ```
 
 

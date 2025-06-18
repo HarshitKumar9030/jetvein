@@ -1,51 +1,75 @@
-import { NextResponse } from 'next/server';
-import { checkRedisHealth } from '@/lib/redis';
-import { getRedisService } from '@/lib/redis-service';
-
-const redisService = getRedisService();
+import { NextResponse } from "next/server";
+import { MongoClient } from "mongodb";
 
 export async function GET() {
   try {
-    // Check Redis health
-    const redisHealthy = await checkRedisHealth();
-    
-    // Get some basic stats
-    const [cacheHits, apiCalls] = await Promise.all([
-      redisService.getCounter('cache_hits'),
-      redisService.getCounter('api_calls')
-    ]);
-    
+  
+    const mongoUri = process.env.MONGODB_URI;
+    let mongoHealthy = false;
+    let mongoStats = {};
+
+    if (mongoUri) {
+      try {
+        const client = new MongoClient(mongoUri);
+        await client.connect();
+
+        const db = client.db();
+        await db.admin().ping();
+
+        // Get some basic database stats
+        const dbStats = await db.stats();
+        const usersCount = await db.collection("users").countDocuments();
+
+        mongoStats = {
+          collections: dbStats.collections || 0,
+          dataSize: dbStats.dataSize || 0,
+          indexSize: dbStats.indexSize || 0,
+          usersCount,
+        };
+
+        mongoHealthy = true;
+        await client.close();
+      } catch (mongoError) {
+        console.error("MongoDB health check failed:", mongoError);
+        mongoHealthy = false;
+      }
+    }
+    // framing the health status response
     const healthStatus = {
-      status: 'healthy',
+      status: mongoHealthy ? "healthy" : "unhealthy",
       timestamp: new Date().toISOString(),
       services: {
-        redis: {
-          status: redisHealthy ? 'healthy' : 'unhealthy',
-          connected: redisHealthy
+        mongodb: {
+          status: mongoHealthy ? "healthy" : "unhealthy",
+          connected: mongoHealthy,
+          stats: mongoStats,
         },
         api: {
-          status: 'healthy'
-        }
+          status: "healthy",
+          uptime: process.uptime(),
+          memory: process.memoryUsage(),
+          version: process.version,
+        },
       },
-      stats: {
-        cache_hits: cacheHits,
-        api_calls: apiCalls,
-        cache_hit_ratio: apiCalls > 0 ? (cacheHits / (cacheHits + apiCalls) * 100).toFixed(2) + '%' : '0%'
-      }
+      environment: {
+        nodeEnv: process.env.NODE_ENV,
+        platform: process.platform,
+        arch: process.arch,
+      },
     };
-    
-    const statusCode = redisHealthy ? 200 : 503;
-    
+
+    const statusCode = mongoHealthy ? 200 : 503;
+
     return NextResponse.json(healthStatus, { status: statusCode });
-    
   } catch (error) {
-    console.error('Health check error:', error);
-    
+    console.error("Health check error:", error);
+
     return NextResponse.json(
       {
-        status: 'unhealthy',
+        status: "unhealthy",
         timestamp: new Date().toISOString(),
-        error: 'Health check failed'
+        error: "Health check failed",
+        message: error instanceof Error ? error.message : "Unknown error",
       },
       { status: 503 }
     );
