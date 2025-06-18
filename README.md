@@ -1,6 +1,12 @@
 # JetVein ✈️
 
-A modern aircraft tracking application built with Next.js 15, TypeScript, and MongoDB.
+JetVein is a flight tracking and info app with real-time aircraft tracking, flight search and aircraft history.
+
+<br />
+
+<p align="center">
+  <img src="/public/jetvein.png" alt="JetVein Logo" width="200" />
+</p>
 
 ## 🚀 Features
 
