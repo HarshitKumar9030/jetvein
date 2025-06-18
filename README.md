@@ -46,8 +46,8 @@ A modern aircraft tracking application built with Next.js 15, TypeScript, and Re
 - [ ] Implement API key management
 
 ### 🔐 Authentication
-- [ ] Set up user authentication
-- [ ] Create user profiles
+- [x] Set up authentication system and providers
+- [x] Created signin page 
 - [ ] Implement session management
 - [ ] Add role-based access control
 
