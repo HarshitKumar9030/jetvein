@@ -58,9 +58,10 @@ JetVein is a flight tracking and info app with real-time aircraft tracking, flig
 - [x] ~~Set up authentication system and providers~~
 - [x] ~~Created signin page~~
 - [x] ~~Implement signup api and signup page~~
-- [ ] Implement session management
-- [ ] Add role-based access control
-                  
+- [x] ~~Implement session management~~
+- [x] ~~Added forgot password page~~
+- [ ] Forgot password api and setup node mailer
+
 ## 🏃‍♂️ Getting Started
 
 1. **Clone the repository**
