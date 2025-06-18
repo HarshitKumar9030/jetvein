@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useSession, signIn, signOut } from 'next-auth/react';
-import { ThemeToggle } from '@/components/theme-toggle';
+// import { ThemeToggle } from '@/components/theme-toggle';
 import { 
   Plane, 
   User, 
@@ -19,6 +19,8 @@ import Link from 'next/link';
 // User Menu Component
 function UserMenu() {
   const { data: session, status } = useSession();
+  // logging session idk 
+  console.log(session);
   const [isOpen, setIsOpen] = useState(false);
 
   if (status === 'loading') {
@@ -237,13 +239,13 @@ function MobileMenu({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: (open: 
             )}
           </div>
           
-          {/* Theme Toggle */}
-          <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
+          {/* Not Gonna use it anymore */}
+          {/* <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
             <div className="flex items-center justify-between">
               <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Theme</span>
               <ThemeToggle />
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </>
@@ -293,7 +295,7 @@ export function Navbar() {
 
           {/* Desktop Actions */}
           <div className="hidden lg:flex items-center gap-4">
-            <ThemeToggle />
+            {/* <ThemeToggle /> */}
             <UserMenu />
           </div>
 

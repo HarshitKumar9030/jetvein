@@ -12,12 +12,13 @@ interface ProvidersProps {
 
 export function Providers({ children, session }: ProvidersProps) {
   return (
-    <SessionProvider session={session}>      <ThemeProvider
+    <SessionProvider session={session}>
+      <ThemeProvider
         attribute="class"
-        defaultTheme="system"
+        defaultTheme="dark"
         enableSystem={true}
         storageKey="jetvein-theme"
-        themes={['light', 'dark', 'system']}
+        themes={['dark']}
       >
         {children}
       </ThemeProvider>

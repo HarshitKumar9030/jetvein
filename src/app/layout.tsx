@@ -11,6 +11,7 @@ const inter = Inter({
 
 
 
+
 export const metadata: Metadata = {
   title: "JetVein - Aircraft Tracker",
   description: "Track aircraft details and flight history with JetVein",
@@ -27,6 +28,7 @@ export default function RootLayout({
         className={`${inter.variable} ${inter.className} antialiased`}
       >
         <Providers>
+          <Navbar />
           {children}
         </Providers>
       </body>

@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Plane, Clock, Calendar, ArrowRight, Zap, Shield, Globe } from 'lucide-react';
-import { Navbar } from '@/components/common/Navbar';
 import JetVein from '@/components/animations/jetvein';
 
 // Animation variants
@@ -96,7 +95,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-blue-900/20 dark:to-indigo-900/30">
-      <Navbar />
+ 
       
       {/* Hero Section */}
       <main className="relative overflow-hidden">
