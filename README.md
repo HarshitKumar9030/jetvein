@@ -5,7 +5,7 @@ JetVein is a flight tracking and info app with real-time aircraft tracking, flig
 <br />
 
 <p align="center">
-  <img src="/public/jetvein.png" alt="JetVein Logo" width="200" />
+  <img src="/public/jetvein.png" alt="JetVein" />
 </p>
 
 ## 🚀 Features
