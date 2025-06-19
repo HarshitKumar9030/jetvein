@@ -187,7 +187,7 @@ function MobileMenu({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: (open: 
               {/* Navigation */}
               <nav className="space-y-2 mb-8">
                 <Link
-                  href="/"
+                  href="/dashboard"
                   className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium transition-colors"
                   onClick={() => setIsOpen(false)}
                 >
@@ -326,7 +326,7 @@ export function Navbar() {
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-8">
             <Link
-              href="/"
+              href="/dashboard"
               className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors"
             >
               Dashboard
