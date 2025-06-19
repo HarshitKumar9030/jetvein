@@ -21,10 +21,6 @@ import { usePathname } from 'next/navigation';
 // User Menu Component
 function UserMenu() {
   const { data: session, status } = useSession();
-  
-
-  // logging session idk 
-  console.log(session);
   const [isOpen, setIsOpen] = useState(false);
 
   if (status === 'loading') {
@@ -35,13 +31,21 @@ function UserMenu() {
 
   if (!session) {
     return (
-      <button
-        onClick={() => signIn()}
-        className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
-      >
-        <LogIn className="w-4 h-4" />
-        Sign In
-      </button>
+      <div className="flex items-center gap-2">
+        <Link
+          href="/auth/signin"
+          className="flex items-center gap-2 px-4 py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors"
+        >
+          Sign In
+        </Link>
+        <Link
+          href="/auth/signup"
+          className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
+        >
+          <LogIn className="w-4 h-4" />
+          Sign Up
+        </Link>
+      </div>
     );
   }
 
@@ -130,6 +134,7 @@ function UserMenu() {
 // Mobile Menu Component
 function MobileMenu({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: (open: boolean) => void }) {
   const { data: session } = useSession();
+  const pathName = usePathname();
 
   return (
     <AnimatePresence>
@@ -182,27 +187,37 @@ function MobileMenu({ isOpen, setIsOpen }: { isOpen: boolean; setIsOpen: (open: 
                 >
                   <X className="w-5 h-5 text-gray-600 dark:text-gray-400" />
                 </button>
-              </div>
-
-              {/* Navigation */}
+              </div>              {/* Navigation */}
               <nav className="space-y-2 mb-8">
                 <Link
                   href="/dashboard"
-                  className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium transition-colors"
+                  className={`flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors ${
+                    pathName === '/dashboard'
+                      ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
+                      : 'hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300'
+                  }`}
                   onClick={() => setIsOpen(false)}
                 >
                   Dashboard
                 </Link>
                 <Link
                   href="/search"
-                  className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium transition-colors"
+                  className={`flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors ${
+                    pathName === '/search'
+                      ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
+                      : 'hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300'
+                  }`}
                   onClick={() => setIsOpen(false)}
                 >
                   Search Aircraft
                 </Link>
                 <Link
                   href="/history"
-                  className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium transition-colors"
+                  className={`flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors ${
+                    pathName === '/history'
+                      ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
+                      : 'hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300'
+                  }`}
                   onClick={() => setIsOpen(false)}
                 >
                   Flight History
@@ -294,18 +309,15 @@ export function Navbar() {
   console.log(pathName)
   
   // hide or show navbar state
-  const [ hide, setHide ] = useState(false);
-  const pagesToBeHiddenOn: string[] = ["/auth/signup", "/auth/signin", "/auth/forgot-password"];
-  
-
-  useEffect(()=>{
-    if(pagesToBeHiddenOn.includes(pathName)){
-      setHide(true)
+  const [ hide, setHide ] = useState(false);  useEffect(() => {
+    const pagesToBeHiddenOn: string[] = ["/auth/signup", "/auth/signin", "/auth/forgot-password"];
+    
+    if (pagesToBeHiddenOn.includes(pathName)) {
+      setHide(true);
+    } else {
+      setHide(false);
     }
-    else{
-      setHide(false)
-    }
-  },[pathName])
+  }, [pathName]);
   
 
   return (
@@ -321,25 +333,35 @@ export function Navbar() {
               <h1 className="text-xl font-bold text-gray-900 dark:text-white">JetVein</h1>
               <p className="text-xs text-gray-500 dark:text-gray-400 -mt-1">Aircraft Tracker</p>
             </div>
-          </Link>
-
-          {/* Desktop Navigation */}
+          </Link>          {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-8">
             <Link
               href="/dashboard"
-              className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors"
+              className={`font-medium transition-colors ${
+                pathName === '/dashboard' 
+                  ? 'text-blue-600 dark:text-blue-400' 
+                  : 'text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400'
+              }`}
             >
               Dashboard
             </Link>
             <Link
               href="/search"
-              className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors"
+              className={`font-medium transition-colors ${
+                pathName === '/search' 
+                  ? 'text-blue-600 dark:text-blue-400' 
+                  : 'text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400'
+              }`}
             >
               Search Aircraft
             </Link>
             <Link
               href="/history"
-              className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors"
+              className={`font-medium transition-colors ${
+                pathName === '/history' 
+                  ? 'text-blue-600 dark:text-blue-400' 
+                  : 'text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400'
+              }`}
             >
               Flight History
             </Link>
